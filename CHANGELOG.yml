@@ -20,6 +20,7 @@ upcoming:
       - Fix small bug with analytics popovers not turning off - maxim
       - Fix for opening URLs in iOS 11 - orta
       - Add ARAppStatus.isDev getter to only determine dev mode - alloy
+      - Don’t report crashes from development builds - alloy
 
     user_facing:
       - Adds a new navigation UI - orta
