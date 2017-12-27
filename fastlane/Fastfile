@@ -2,28 +2,28 @@ require 'yaml'
 require 'spaceship'
 require 'fileutils'
 
-APP_ID = "net.artsy.artsy"
+APP_ID = 'net.artsy.artsy'.freeze
 
 lane :ship_beta do
   setup_for_app_store
   verify_pod_keys
 
-  readme_yaml = File.read("../CHANGELOG.yml")
-  readme_data = YAML.load(readme_yaml)
+  readme_yaml = File.read('../CHANGELOG.yml')
+  readme_data = YAML.safe_load(readme_yaml)
 
-  latest_version = readme_data["upcoming"]["version"]
+  latest_version = readme_data['upcoming']['version']
 
-  Spaceship::Tunes.login(ENV["FASTLANE_USERNAME"], ENV["FASTLANE_PASSWORD"])
-  app = Spaceship::Tunes::Application.find("net.artsy.artsy")
+  Spaceship::Tunes.login(ENV['FASTLANE_USERNAME'], ENV['FASTLANE_PASSWORD'])
+  app = Spaceship::Tunes::Application.find('net.artsy.artsy')
 
   # Fail early if we need to make a new version on iTunes
   if app.latest_version.version != latest_version
     raise "You need to create an app version for #{latest_version} in iTunes before deploying"
   end
 
-  upcoming = readme_data["upcoming"]
+  upcoming = readme_data['upcoming']
   commit = `git log -n1 --format='%h'`.strip
-  beta_readme = "## #{upcoming["version"]} - #{commit} \n\n - #{upcoming["user_facing"].join "\n - "} \n\n"
+  beta_readme = "## #{upcoming['version']} - #{commit} \n\n - #{upcoming['user_facing'].join "\n - "} \n\n"
 
   # Make sure the stickers app is up to date in it's plist
   `/usr/libexec/PlistBuddy -c "Set CFBundleVersion #{latest_version}" Artsy\ Stickers/Info.plist`
@@ -50,15 +50,15 @@ lane :ship_beta do
   `git push http #{tag} -f`
 
   # First make individual dSYM archives available to the sentry-cli tool.
-  root = File.expand_path("../..", __FILE__)
+  root = File.expand_path('../..', __FILE__)
   sentry_version = latest_version
-  sentry_dist = `/usr/libexec/PlistBuddy -c "print CFBundleVersion" #{File.join(root, "Artsy/App_Resources/Artsy-Info.plist")}`.strip
-  dsym_archive = File.join(root, "Artsy.app.dSYM.zip")
-  dsyms_path = File.join(root, "dSYMs")
+  sentry_dist = `/usr/libexec/PlistBuddy -c "print CFBundleVersion" #{File.join(root, 'Artsy/App_Resources/Artsy-Info.plist')}`.strip
+  dsym_archive = File.join(root, 'Artsy.app.dSYM.zip')
+  dsyms_path = File.join(root, 'dSYMs')
   sh "unzip -d #{dsyms_path} #{dsym_archive}"
 
   sentry = lambda do |project_slug|
-    org_slug = "artsynet"
+    org_slug = 'artsynet'
 
     sentry_create_release auth_token: ENV['SentryUploadAuthKey'],
                           org_slug: org_slug,
@@ -67,12 +67,12 @@ lane :ship_beta do
                           finalize: false
     puts "Created a release for #{project_slug}"
 
-    Dir.glob(File.join(dsyms_path, "*.dSYM")).each do |dsym_path|
+    Dir.glob(File.join(dsyms_path, '*.dSYM')).each do |dsym_path|
       # No need to specify `dist` as the build number is encoded in the dSYM’s Info.plist
       sentry_upload_dsym auth_token: ENV['SentryUploadAuthKey'],
-                        org_slug: org_slug,
-                        project_slug: project_slug,
-                        dsym_path: dsym_path
+                         org_slug: org_slug,
+                         project_slug: project_slug,
+                         dsym_path: dsym_path
     end
 
     puts "Uploaded dsym for #{project_slug}"
@@ -82,7 +82,7 @@ lane :ship_beta do
                        project_slug: project_slug,
                        version: sentry_version,
                        dist: sentry_dist,
-                       file: "Pods/Emission/Pod/Assets/Emission.js"
+                       file: 'Pods/Emission/Pod/Assets/Emission.js'
     puts "Uploaded Emission.js for #{project_slug}"
 
     sentry_upload_sourcemap auth_token: ENV['SentryUploadAuthKey'],
@@ -90,12 +90,12 @@ lane :ship_beta do
                             project_slug: project_slug,
                             version: sentry_version,
                             dist: sentry_dist,
-                            sourcemap: "Pods/Emission/Pod/Assets/Emission.js.map",
+                            sourcemap: 'Pods/Emission/Pod/Assets/Emission.js.map',
                             rewrite: true
     puts "Uploaded Emission.js.map for #{project_slug}"
   end
 
-  sentry.call("eigen")
+  sentry.call('eigen')
   # sentry.call("eigen-staging")
 
   # Make dSYM archive available in case we failed to put them in the right place in Sentry.
@@ -105,7 +105,7 @@ lane :ship_beta do
   pilot changelog: beta_readme
 
   # Let us know everything has finished
-  slack message: "There is a new Eigen beta available. Grab it from Testflight on your iOS device.",
+  slack message: 'There is a new Eigen beta available. Grab it from Testflight on your iOS device.',
         payload: {
           'Version' => latest_version,
           'What\'s new' => beta_readme
@@ -114,10 +114,10 @@ lane :ship_beta do
 end
 
 lane :deploy_latest_to_external do
-  readme_yaml = File.read("../CHANGELOG.yml")
-  readme_data = YAML.load(readme_yaml)
+  readme_yaml = File.read('../CHANGELOG.yml')
+  readme_data = YAML.safe_load(readme_yaml)
 
-  latest_version = readme_data["upcoming"]["version"]
+  latest_version = readme_data['upcoming']['version']
 
   id = CredentialsManager::AppfileConfig.try_fetch_value(:apple_id)
   password = CredentialsManager::AccountManager.new(user: id).password
@@ -131,7 +131,7 @@ lane :deploy_latest_to_external do
     app_id: APP_ID,
     train: train.version_string,
     build_number: latest_version,
-    platform: "ios"
+    platform: 'ios'
   )
 end
 
@@ -139,44 +139,42 @@ end
 ## this does it in a pretty reasonable amount of code.
 
 lane :setup_for_app_store do
-  signing_root = "signing"
+  signing_root = 'signing'
 
   `git clone https://github.com/artsy/mobile_code_signing.git #{signing_root}`
 
   # prints out the codesigning identities
-  system "security find-identity -v -p codesigning"
+  system 'security find-identity -v -p codesigning'
 
   # Install the iOS distribution certificate, -A
   system "security import #{signing_root}/ios_distribution.cer  -k ~/Library/Keychains/login.keychain -A"
 
   # First do project-wide configuration.
-  automatic_code_signing(
-    path: 'Artsy.xcodeproj',
-    use_automatic_signing: false,
-    team_id: "23KMWZ572J"
-  )
+  # automatic_code_signing(
+  #   path: 'Artsy.xcodeproj',
+  #   use_automatic_signing: false,
+  #   team_id: '23KMWZ572J'
+  # )
 
   # Then follow up with target-specific configuration.
-  [["eigen", "Artsy"], ["eigen-stickers", "Artsy Stickers"]].each do |app_details|
+  [%w[eigen Artsy], ['eigen-stickers', 'Artsy Stickers']].each do |app_details|
     app_name = app_details[0]
     app_target = app_details[1]
 
     # Move our provisioning profile in
-    profile_path = File.expand_path("~") + "/Library/MobileDevice/Provisioning Profiles/"
-    destination = profile_path + "/" + app_name + ".mobileprovision"
-    profile = Dir.glob(signing_root + "/profiles/" + app_name + "/*").first
+    profile_path = File.expand_path('~') + '/Library/MobileDevice/Provisioning Profiles/'
+    destination = profile_path + '/' + app_name + '.mobileprovision'
+    profile = Dir.glob(signing_root + '/profiles/' + app_name + '/*').first
 
-    update_project_provisioning(
-      xcodeproj: 'Artsy.xcodeproj',
-      profile: "fastlane/#{profile}",
-      target_filter: app_target,
-      build_configuration: 'Store'
-    )
+    # update_project_provisioning(
+    #   xcodeproj: 'Artsy.xcodeproj',
+    #   profile: "fastlane/#{profile}",
+    #   target_filter: app_target,
+    #   build_configuration: 'Store'
+    # )
 
     # Ensure folder exists
-    unless File.directory?(profile_path)
-      FileUtils.mkdir_p(profile_path)
-    end
+    FileUtils.mkdir_p(profile_path) unless File.directory?(profile_path)
 
     # Migrate it in
     FileUtils.copy profile, destination
@@ -184,18 +182,18 @@ lane :setup_for_app_store do
   end
 
   # Install the key
-  key = Dir.glob(signing_root + "/keys/eigen/*").first
+  key = Dir.glob(signing_root + '/keys/eigen/*').first
   system "security import #{key} -k ~/Library/Keychains/login.keychain -P #{ENV['MATCH_PASSWORD']}  -A "
 
   # prints out the codesigning identities
-  system "security find-identity -v -p codesigning"
+  system 'security find-identity -v -p codesigning'
 
   # Clean-up
   `rm -rf #{signing_root}`
 end
 
 error do |_, exception|
-  File.open(File.join(ENV['CIRCLE_ARTIFACTS'], "fastlane-error.txt"), "w") do |file|
+  File.open(File.join(ENV['CIRCLE_ARTIFACTS'], 'fastlane-error.txt'), 'w') do |file|
     file.puts("#{exception.message}\n\t#{exception.backtrace.join("\n\t")}")
   end
 end

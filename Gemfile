@@ -9,6 +9,10 @@ group :development do
   gem 'lowdown' # For handling notifications + certs
 end
 
+group :deployment do
+  gem 'fastlane' # For shipping builds
+end
+
 group :test do
   gem 'danger' # Stop saying 'you forgot to...'
   gem 'nokogiri', '>= 1.6.7' # Lols, just to specify the version
