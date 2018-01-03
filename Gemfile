@@ -1,21 +1,10 @@
+# This is copied over into the Eigen root
+# during beta deployment
+
 source 'https://rubygems.org'
 
-gem 'cocoapods', '>= 1.1.0' # Deps
-gem 'cocoapods-check' # So we know if we need to run `pod install`
-gem 'cocoapods-keys' # So we don't leak ENV vars
-gem 'psych' # So our Podfile.lock is consistent
+gem 'fastlane'
+gem 'cocoapods'
 
-group :development do
-  gem 'lowdown' # For handling notifications + certs
-end
-
-group :deployment do
-  gem 'fastlane' # For shipping builds
-end
-
-group :test do
-  gem 'danger' # Stop saying 'you forgot to...'
-  gem 'nokogiri', '>= 1.6.7' # Lols, just to specify the version
-  gem 'second_curtain' # to upload snapshot fails
-  gem 'xcpretty' # Makes CI readable
-end
+plugins_path = File.join(File.dirname(__FILE__), 'fastlane', 'Pluginfile')
+eval(File.read(plugins_path), binding) if File.exist?(plugins_path)

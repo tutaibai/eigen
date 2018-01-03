@@ -66,15 +66,15 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>2017.07.07.13</string>
+	<string>2018.01.02.11</string>
 	<key>FacebookAppID</key>
 	<string>308278682573501</string>
 	<key>FacebookDisplayName</key>
 	<string>Artsy</string>
 	<key>GITCommitRev</key>
-	<string>1445c43</string>
+	<string>34b08002</string>
 	<key>GITCommitSha</key>
-	<string>1445c43a4c80a181c3d9f0d5e509a26618a6acdb</string>
+	<string>34b08002e309d14b7c11e9e58c511c1374b6956d</string>
 	<key>GITRemoteOriginURL</key>
 	<string>https://github.com/artsy/eigen.git</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
