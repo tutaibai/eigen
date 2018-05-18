@@ -297,11 +297,11 @@ static const CGFloat ARMenuButtonDimension = 50;
     }
     
     [switchboard registerPathCallbackAtPath:@"/works-for-you" callback:^id _Nullable(NSDictionary * _Nullable parameters) {
-        return [self rootNavigationControllerAtIndex:ARTopTabControllerIndexHome parameters:parameters].rootViewController;
+        return [[ARHomeComponentViewController alloc] initWithSelectedArtist:nil tab:ARHomeTabForYou emission:nil];
     }];
     
     [switchboard registerPathCallbackAtPath:@"/auctions" callback:^id _Nullable(NSDictionary * _Nullable parameters) {
-        return [self rootNavigationControllerHomeWithTab:ARHomeTabAuctions].rootViewController;
+        return [[ARHomeComponentViewController alloc] initWithSelectedArtist:nil tab:ARHomeTabAuctions emission:nil];
     }];
 }
 
@@ -363,7 +363,7 @@ static const CGFloat ARMenuButtonDimension = 50;
     NSInteger numberOfTabs = [self.navigationDataSource numberOfViewControllersForTabContentView:self.tabContentView];
     for (NSInteger index = 0; index < numberOfTabs; index++) {
         ARNavigationController *rootController = [self rootNavigationControllerAtIndex:index];
-        if (rootController.rootViewController == viewController) {
+        if (rootController.rootViewController.class == viewController.class) {
             return index;
         } else if ([viewController isKindOfClass:ARFavoritesComponentViewController.class]) {
             return ARTopTabControllerIndexFavorites;
@@ -577,7 +577,7 @@ static const CGFloat ARMenuButtonDimension = 50;
                 presentableController = [self.navigationDataSource navigationControllerAtIndex:ARTopTabControllerIndexHome parameters:@{@"artist_id": selectedArtistID}];
             } else if ([viewController isKindOfClass:ARHomeComponentViewController.class]) {
                 // just show the home controller as passed in / intended, as it may have tab selections
-                presentableController = (ARNavigationController *)viewController.navigationController;
+                presentableController = [[ARNavigationController alloc] initWithRootViewController:viewController];
             } else {
                 presentableController = [self rootNavigationControllerAtIndex:index];
             }
