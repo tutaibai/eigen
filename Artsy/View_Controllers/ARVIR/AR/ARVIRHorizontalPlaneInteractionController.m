@@ -9,6 +9,7 @@
 #import "ARAugmentedRealityConfig.h"
 #import "ARVIRHorizontalPlaneInteractionController.h"
 #import "ARDispatchManager.h"
+#import "ARSCVectorStabilizer.h"
 
 typedef NS_ENUM(NSInteger, ARHorizontalVIRMode) {
     ARHorizontalVIRModeLaunching,
@@ -47,6 +48,7 @@ API_AVAILABLE(ios(11.0))
 @property (nonatomic, assign) CGPoint pointOnScreenForArtworkProjection;
 @property (nonatomic, assign) CGPoint pointOnScreenForWallProjection;
 
+@property (nonatomic, strong) ARSCVectorStabilizer *positionStabilizer;
 @end
 
 NSInteger attempt = 0;
@@ -60,6 +62,7 @@ NSInteger attempt = 0;
         _sceneView = scene;
         _config = config;
         _delegate = delegate;
+        _positionStabilizer = [[ARSCVectorStabilizer alloc] init];
         [self restart];
     }
     return self;
@@ -350,7 +353,7 @@ NSInteger attempt = 0;
             }
 
             SCNTransaction.animationDuration = 0.04;
-            self.ghostWallLine.position = result.localCoordinates;
+            self.ghostWallLine.position = [self.positionStabilizer stableVectorForVector:result.localCoordinates];
             [self.delegate isShowingGhostWall:YES];
             return;
         }
@@ -409,7 +412,6 @@ NSInteger attempt = 0;
         self.ghostArtwork = nil;
     }
 }
-
 
 - (void)renderer:(id<SCNSceneRenderer>)renderer didUpdateNode:(SCNNode *)node forAnchor:(ARAnchor *)anchor API_AVAILABLE(ios(11.0))
 {
