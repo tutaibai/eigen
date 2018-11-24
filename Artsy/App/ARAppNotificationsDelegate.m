@@ -196,7 +196,7 @@
     
     if (isConversation) {
         NSUInteger count = [userInfo[@"aps"][@"badge"] unsignedLongValue];
-        [[ARTopMenuViewController sharedController] setNotificationCount:count forControllerAtIndex:ARTopTabControllerIndexMessaging];
+        [[ARTopMenuViewController sharedController] setNotificationCount:count forControllerAtIndex:ARTopTabControllerIndexLocalDiscovery];
     }
 
     if (applicationState == UIApplicationStateBackground) {
@@ -268,7 +268,7 @@
     BOOL isConversation = url && [[[NSURL URLWithString:url] path] hasPrefix:@"/conversation/"];
     
     if (isConversation) {
-        [topMenuController presentRootViewControllerAtIndex:ARTopTabControllerIndexMessaging animated:NO];
+        [topMenuController presentRootViewControllerAtIndex:ARTopTabControllerIndexLocalDiscovery animated:NO];
     }
     
     if (viewController) {
@@ -280,7 +280,7 @@
 {
     [ArtsyAPI getCurrentUserTotalUnreadMessagesCount:^(NSInteger count) {
         ar_dispatch_main_queue(^{
-            [[ARTopMenuViewController sharedController] setNotificationCount:count forControllerAtIndex:ARTopTabControllerIndexMessaging];
+            [[ARTopMenuViewController sharedController] setNotificationCount:count forControllerAtIndex:ARTopTabControllerIndexLocalDiscovery];
             [UIApplication sharedApplication].applicationIconBadgeNumber = count;
         });
     } failure:^(NSError * _Nonnull error) {

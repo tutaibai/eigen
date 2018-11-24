@@ -96,6 +96,8 @@
 		34B1151A2069AA7C0025D925 /* AuctionBuyNowTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B115192069AA7C0025D925 /* AuctionBuyNowTitleView.swift */; };
 		3A1DDDA3216CFC7100190F84 /* AREigenInquiryComponentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1DDDA2216CFC7100190F84 /* AREigenInquiryComponentViewController.m */; };
 		3A1DDDA6216D04DB00190F84 /* ARAuthValidator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A1DDDA5216D04DB00190F84 /* ARAuthValidator.m */; };
+		3A59C019219DAB9D00B6EE33 /* nav_browse@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A59C018219DAB9D00B6EE33 /* nav_browse@3x.png */; };
+		3A59C01D219DAE8300B6EE33 /* nav_local@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A59C01C219DAE8300B6EE33 /* nav_local@3x.png */; };
 		3A860AD4214C5DD600C7F555 /* artwork.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 3A860AD3214C5DD600C7F555 /* artwork.graphql */; };
 		3AF584D7217A231E00BE4713 /* ARAppDelegateEmissionSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AF584D5217A1CF400BE4713 /* ARAppDelegateEmissionSpec.m */; };
 		3AF584D9217A282100BE4713 /* AROptionsSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AF584D8217A282100BE4713 /* AROptionsSpec.m */; };
@@ -998,6 +1000,8 @@
 		3A1DDDA2216CFC7100190F84 /* AREigenInquiryComponentViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AREigenInquiryComponentViewController.m; sourceTree = "<group>"; };
 		3A1DDDA4216D04DB00190F84 /* ARAuthValidator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARAuthValidator.h; sourceTree = "<group>"; };
 		3A1DDDA5216D04DB00190F84 /* ARAuthValidator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARAuthValidator.m; sourceTree = "<group>"; };
+		3A59C018219DAB9D00B6EE33 /* nav_browse@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "nav_browse@3x.png"; path = "../../../../../../../../../Desktop/nav_browse@3x.png"; sourceTree = "<group>"; };
+		3A59C01C219DAE8300B6EE33 /* nav_local@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav_local@3x.png"; sourceTree = "<group>"; };
 		3A860AD3214C5DD600C7F555 /* artwork.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = artwork.graphql; sourceTree = "<group>"; };
 		3AF584D5217A1CF400BE4713 /* ARAppDelegateEmissionSpec.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARAppDelegateEmissionSpec.m; sourceTree = "<group>"; };
 		3AF584D8217A282100BE4713 /* AROptionsSpec.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AROptionsSpec.m; sourceTree = "<group>"; };
@@ -4126,6 +4130,8 @@
 				608C6DC31FAA11620044E235 /* nav_profile@3x.png */,
 				608C6DBF1FAA11610044E235 /* nav_search@2x.png */,
 				608C6DC61FAA11630044E235 /* nav_search@3x.png */,
+				3A59C018219DAB9D00B6EE33 /* nav_browse@3x.png */,
+				3A59C01C219DAE8300B6EE33 /* nav_local@3x.png */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -5091,6 +5097,7 @@
 				1C5AAEB61CD87D9B00515B73 /* SearchButton@2x.png in Resources */,
 				1C5AAEB51CD87D9B00515B73 /* SearchButton.png in Resources */,
 				5E4E32A31E535D1100C7F724 /* LotStandingsLotViewCompact.xib in Resources */,
+				3A59C01D219DAE8300B6EE33 /* nav_local@3x.png in Resources */,
 				E60673B319BE4E8C00EF05EB /* full_logo_white_small@2x.png in Resources */,
 				1CC9EBA21CC76CDD00A74E3C /* followButton@2x.png in Resources */,
 				5152C6591B500EA30018D4E4 /* HomeButton@2x.png in Resources */,
@@ -5107,6 +5114,7 @@
 				5EF9E1181C56D0B900CD80DB /* AuctionRefineCheck@2x.png in Resources */,
 				6019A9081C7E76EF00E292FA /* LiveAuctionsAssets.xcassets in Resources */,
 				518B421E1B57CF7100210A02 /* AttentionIcon@2x.png in Resources */,
+				3A59C019219DAB9D00B6EE33 /* nav_browse@3x.png in Resources */,
 				E66492D318B7D26B00531B8F /* Parallax_Overlay_Top@2x.png in Resources */,
 				6016120620B7446800FD54B0 /* ARVIRModalClose@3x.png in Resources */,
 				5E4E32A51E535D2A00C7F724 /* LotStandingsLotViewRegular.xib in Resources */,

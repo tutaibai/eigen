@@ -16,6 +16,7 @@
 #import "ARDefaults.h"
 #import "ARSwitchBoard.h"
 
+#import "ARBrowseViewController.h"
 #import <SDWebImage/SDWebImagePrefetcher.h>
 #import <ObjectiveSugar/ObjectiveSugar.h>
 
@@ -88,7 +89,8 @@
 
 - (ARNavigationController *)favoritesNavigationController
 {
-    ARFavoritesComponentViewController *favoritesVC = [[ARFavoritesComponentViewController alloc] init];
+    ARBrowseViewController *favoritesVC = [[ARBrowseViewController alloc] init];
+    favoritesVC.networkModel = [[ARBrowseNetworkModel alloc] init];
     _favoritesNavigationController = [[ARNavigationController alloc] initWithRootViewController:favoritesVC];
     return _favoritesNavigationController;
 }
@@ -114,10 +116,10 @@
                 return [self feedNavigationController];
             }
 
-        case ARTopTabControllerIndexMessaging:
+        case ARTopTabControllerIndexLocalDiscovery:
             return [self messagingNavigationController];
 
-        case ARTopTabControllerIndexFavorites:
+        case ARTopTabControllerIndexBrowse:
             return [self favoritesNavigationController];
 
         case ARTopTabControllerIndexProfile:

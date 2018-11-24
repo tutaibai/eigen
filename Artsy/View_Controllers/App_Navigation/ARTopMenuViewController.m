@@ -285,8 +285,8 @@ static const CGFloat ARMenuButtonDimension = 50;
 {
     NSDictionary *menuToPaths = @{
         @(ARTopTabControllerIndexHome) : @"/",
-        @(ARTopTabControllerIndexMessaging) : @"/inbox",
-        @(ARTopTabControllerIndexFavorites) : @"/favorites",
+        @(ARTopTabControllerIndexLocalDiscovery) : @"/local",
+        @(ARTopTabControllerIndexBrowse) : @"/browse",
         @(ARTopTabControllerIndexProfile) : @"/ios-settings", // A good argument is "user/edit", _but_ the app barely supports any of it's features
     };
 
@@ -366,9 +366,9 @@ static const CGFloat ARMenuButtonDimension = 50;
         if (rootController.rootViewController == viewController) {
             return index;
         } else if ([viewController isKindOfClass:ARFavoritesComponentViewController.class]) {
-            return ARTopTabControllerIndexFavorites;
+            return ARTopTabControllerIndexBrowse;
         } else if ([viewController isKindOfClass:ARInboxComponentViewController.class]) {
-            return ARTopTabControllerIndexMessaging;
+            return ARTopTabControllerIndexLocalDiscovery;
         }
     }
 
@@ -392,10 +392,10 @@ static const CGFloat ARMenuButtonDimension = 50;
     return @[
              [self tabButtonWithName:@"nav_home" accessibilityName:@"Home"],
              [self tabButtonWithName:@"nav_search" accessibilityName:@"Search"],
-             [self tabButtonWithName:@"nav_messaging" accessibilityName:@"Messages"],
-             [self tabButtonWithName:@"nav_favs" accessibilityName:@"Saved"],
-             // [self tabButtonWithName:@"nav_profile" accessibilityName:@"Profile"],
-             ];
+             [self tabButtonWithName:@"nav_local" accessibilityName:@"Local Disco"],
+             [self tabButtonWithName:@"nav_browse" accessibilityName:@"Browse"],
+            [self tabButtonWithName:@"nav_profile" accessibilityName:@"Profile"],
+    ];
 }
 
 - (void)updateButtons;
@@ -582,10 +582,10 @@ static const CGFloat ARMenuButtonDimension = 50;
                 presentableController = [self rootNavigationControllerAtIndex:index];
             }
             break;
-        case ARTopTabControllerIndexMessaging:
+        case ARTopTabControllerIndexLocalDiscovery:
             presentableController = [self rootNavigationControllerAtIndex:index];
             break;
-        case ARTopTabControllerIndexFavorites:
+        case ARTopTabControllerIndexBrowse:
             presentableController = [self rootNavigationControllerAtIndex:index];
             break;
         case ARTopTabControllerIndexProfile:
@@ -675,8 +675,8 @@ static const CGFloat ARMenuButtonDimension = 50;
 
         // Otherwise find the first scrollview and pop to top
         else if (index == ARTopTabControllerIndexHome ||
-                 index == ARTopTabControllerIndexMessaging ||
-                 index == ARTopTabControllerIndexFavorites) {
+                 index == ARTopTabControllerIndexLocalDiscovery ||
+                 index == ARTopTabControllerIndexBrowse) {
             UIViewController *currentRootViewController = [controller.childViewControllers first];
             UIScrollView *rootScrollView = (id)[self firstScrollToTopScrollViewFromRootView:currentRootViewController.view];
             [rootScrollView setContentOffset:CGPointMake(rootScrollView.contentOffset.x, -rootScrollView.contentInset.top) animated:YES];

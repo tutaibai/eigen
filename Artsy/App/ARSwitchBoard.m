@@ -29,6 +29,7 @@
 #import "ARSerifNavigationViewController.h"
 
 #import <Emission/ARShowConsignmentsFlowViewController.h>
+#import <Emission/ARFavoritesComponentViewController.h>
 
 #import "ArtsyEcho.h"
 #import "Artsy-Swift.h"
@@ -198,6 +199,10 @@ NSInteger const ARLiveAuctionsCurrentWebSocketVersionCompatibility = 4;
     [self.routes addRoute:@"/consign/submission" handler:JLRouteParams {
         UIViewController *submissionVC = [[ARShowConsignmentsFlowViewController alloc] init];
         return [[ARNavigationController alloc] initWithRootViewController:submissionVC];
+    }];
+
+    [self.routes addRoute:@"/favourites" handler:JLRouteParams {
+        return [[ARFavoritesComponentViewController alloc] init];
     }];
 
     [self.routes addRoute:@"/conditions-of-sale" handler:JLRouteParams {

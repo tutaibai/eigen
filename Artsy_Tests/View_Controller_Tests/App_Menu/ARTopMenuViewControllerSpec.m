@@ -167,7 +167,7 @@ describe(@"navigation", ^{
    });
 
    describe(@"messaging", ^{
-       itShouldBehaveLike(@"tab behavior", @{@"tab" : [NSNumber numberWithInt:ARTopTabControllerIndexMessaging]});
+       itShouldBehaveLike(@"tab behavior", @{@"tab" : [NSNumber numberWithInt:ARTopTabControllerIndexLocalDiscovery]});
    });
 
 //   describe(@"profile", ^{
@@ -176,7 +176,7 @@ describe(@"navigation", ^{
 
    describe(@"favorites", ^{
        before(^{
-           tabIndex = ARTopTabControllerIndexFavorites;
+           tabIndex = ARTopTabControllerIndexBrowse;
        });
 
        describe(@"logged in", ^{
@@ -186,7 +186,7 @@ describe(@"navigation", ^{
            after(^{
                [ARUserManager clearUserData];
            });
-           itShouldBehaveLike(@"tab behavior", @{@"tab" : [NSNumber numberWithInt:ARTopTabControllerIndexFavorites]});
+           itShouldBehaveLike(@"tab behavior", @{@"tab" : [NSNumber numberWithInt:ARTopTabControllerIndexBrowse]});
        });
    });
 
@@ -201,8 +201,8 @@ describe(@"navigation", ^{
         it(@"supports routing to paths", ^{
             NSDictionary *menuToPaths = @{
               @(ARTopTabControllerIndexHome) : @"/",
-              @(ARTopTabControllerIndexMessaging) : @"/inbox",
-              @(ARTopTabControllerIndexFavorites) : @"/favorites",
+              @(ARTopTabControllerIndexLocalDiscovery) : @"/local",
+              @(ARTopTabControllerIndexBrowse) : @"/browse",
               @(ARTopTabControllerIndexProfile) : @"/ios-settings",
             };
 
@@ -211,11 +211,11 @@ describe(@"navigation", ^{
                 id viewcontroller = [switchboard loadPath:menuToPaths[tabIndex]];
 
                 // This will regenerate each time
-                if (tabIndex.integerValue == ARTopTabControllerIndexFavorites) {
+                if (tabIndex.integerValue == ARTopTabControllerIndexBrowse) {
                     expect(viewcontroller).to.beAKindOf(ARFavoritesComponentViewController.class);
 
                 // This will regenerate each time
-                } else if (tabIndex.integerValue == ARTopTabControllerIndexMessaging) {
+                } else if (tabIndex.integerValue == ARTopTabControllerIndexLocalDiscovery) {
                     expect(viewcontroller).to.beAKindOf(ARInboxComponentViewController.class);
 
                 } else {

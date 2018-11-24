@@ -5,8 +5,8 @@
 typedef NS_ENUM(NSInteger, ARTopTabControllerIndex) {
     ARTopTabControllerIndexHome,
     ARTopTabControllerIndexSearch,
-    ARTopTabControllerIndexMessaging,
-    ARTopTabControllerIndexFavorites,
+    ARTopTabControllerIndexLocalDiscovery,
+    ARTopTabControllerIndexBrowse,
     ARTopTabControllerIndexProfile,
     // This should not really be used. It should always be the last and is meant only to have a count of total number
     // of tabs/view controllers the tab view should hold.
